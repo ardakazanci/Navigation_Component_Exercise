@@ -8,11 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import com.example.android.navigation.databinding.FragmentTitleBinding
 
 /**
  * Chapter 1 : Title Fragment Added
- * 
+ * Chapter 2 : NavHostFragment Added -> İlgili hedefleri içinde bulunan activity içerisinde değişeceğini belirlemek adına yapılan bir işlem.
  */
 
 
@@ -21,8 +22,14 @@ class TitleFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        val binding = DataBindingUtil.inflate<FragmentTitleBinding>(inflater,R.layout.fragment_title,container,false)
+        val binding = DataBindingUtil.inflate<FragmentTitleBinding>(inflater, R.layout.fragment_title, container, false)
 
+
+        binding.playButton.setOnClickListener { view: View ->
+
+            view.findNavController().navigate(R.id.action_titleFragment_to_gameFragment)
+
+        }
 
 
         return binding.root
