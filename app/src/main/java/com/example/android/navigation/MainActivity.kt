@@ -19,28 +19,53 @@ package com.example.android.navigation
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.android.navigation.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var drawerLayout: DrawerLayout
+
+    /*
+
+        findNavController  : NavHostFragment verilmelidir.
+        setupActionBarWithNavController : ActionBar içerisinde gösterilecek konseptler
+        setupWithNavController :
+        onSupportNavigationUp()
+
+     */
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         @Suppress("UNUSED_VARIABLE")
+
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
 
-        val navController = this.findNavController(R.id.myNavHostFragment);
+        drawerLayout = binding.drawerLayout
 
-        NavigationUI.setupActionBarWithNavController(this, navController);
+
+        // Oluşturmuş olduğumuz Navigation Haritasını bağlar.
+        val navController = this.findNavController(R.id.myNavHostFragment)
+
+
+        // Navigation itemlerinin bağlanması
+        NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
+
+
+        // Çekmecenin Navigation sistemine bağlanması.
+        NavigationUI.setupWithNavController(binding.navView, navController)
 
 
     }
 
     override fun onSupportNavigateUp(): Boolean {
 
-        val navController = this.findNavController(R.id.myNavHostFragment);
+        val navController = this.findNavController(R.id.myNavHostFragment)
 
-        return navController.navigateUp();
+        return NavigationUI.navigateUp(navController, drawerLayout)
 
 
     }
